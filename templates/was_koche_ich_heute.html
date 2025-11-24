@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Was koche ich heute?</h2>
+
+<form method="post" class="mb-4">
+
+    <!-- Zutaten -->
+    <div class="mb-3">
+        <label class="form-label"><strong>Zutaten (kommagetrennt)</strong></label>
+        <input class="form-control" name="ingredients" placeholder="Tomaten, Pasta, Basilikum …">
+    </div>
+
+    <!-- Tag-Filter -->
+    <div class="mb-3">
+        <label class="form-label"><strong>Tag auswählen</strong></label>
+        <select class="form-control" name="tag">
+            <option value="">— optional —</option>
+            {% for t in tags %}
+                <option value="{{ t }}">{{ t }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Zufallsrezept -->
+    <div class="form-check mb-3">
+        <input type="checkbox" class="form-check-input" id="random" name="random">
+        <label for="random" class="form-check-label">Zufallsrezept auswählen</label>
+    </div>
+
+    <button class="btn btn-primary">Suchen</button>
+</form>
+
+{% if results %}
+<hr>
+<h3>Gefundene Rezepte</h3>
+
+<div class="row mt-3">
+    {% for r in results %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+
+            {% if r.photo %}
+            <img src="/uploads/{{ r.photo }}" class="card-img-top" alt="{{ r.name }}">
+            {% endif %}
+
+            <div class="card-body">
+                <h5 class="card-title">{{ r.name }}</h5>
+
+                <p class="text-muted">
+                    Vorbereitung: {{ r.prep_minutes }} Min<br>
+                    Kochen: {{ r.cook_minutes }} Min
+                </p>
+
+                <a href="/rezept/{{ r.id }}" class="btn btn-primary">Rezept öffnen</a>
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+    {% if request.method == 'POST' %}
+        <hr>
+        <p><em>Keine Rezepte gefunden.</em></p>
+    {% endif %}
+{% endif %}
+
+{% endblock %}

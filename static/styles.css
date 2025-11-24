@@ -1,0 +1,254 @@
+/* =======================
+Root variables für Light-Mode
+======================= */
+:root {
+--bg-color: #fef9f4;          /* heller Hintergrund */
+--text-color: #212529;        /* dunkler Text */
+--header-bg: #009246;         /* Grün der italienischen Flagge */
+--footer-bg: #ffffff;         /* weißer Footer */
+--nav-link: #ffffff;          /* Links im Header */
+--card-bg: #ffffff;
+--card-text: #212529;
+--button-bg: #ce2b37;         /* Rot der italienischen Flagge */
+--button-hover: #a21f28;
+--difficulty-einfach: #28a745;
+--difficulty-mittel: #ffc107;
+--difficulty-schwer: #dc3545;
+}
+
+/* =======================
+Dark Mode
+======================= */
+body[data-theme="dark"] {
+--bg-color: #121212;
+--text-color: #f5f5f5;
+--header-bg: #1d1d1d;
+--footer-bg: #222222;
+--nav-link: #f5f5f5;
+--card-bg: #2a2a2a;
+--card-text: #f5f5f5;
+--button-bg: #28a745;
+--button-hover: #1f7a34;
+}
+
+/* =======================
+Global Styles
+======================= */
+body {
+background-color: var(--bg-color);
+color: var(--text-color);
+margin: 0;
+font-family: Arial, sans-serif;
+}
+
+header {
+background: var(--header-bg);
+padding: 15px 30px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+color: var(--nav-link);
+border-bottom: 3px solid #00732c;
+box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+border-radius: 0 0 12px 12px;
+}
+
+header h2 {
+margin: 0;
+font-size: 1.8rem;
+font-weight: bold;
+}
+
+nav a {
+color: var(--nav-link);
+margin-right: 20px;
+text-decoration: none;
+font-weight: bold;
+transition: color 0.3s;
+}
+
+nav a:hover {
+color: #ffc107;
+}
+
+footer {
+background-color: var(--footer-bg);
+color: var(--text-color);
+padding: 20px 0;
+text-align: center;
+border-top: 2px solid #e0e0e0;
+border-radius: 12px 12px 0 0;
+}
+
+.container.content-wrapper {
+margin-top: 30px;
+}
+
+/* =======================
+Cards
+======================= */
+.card {
+background-color: var(--card-bg);
+color: var(--card-text);
+border-radius: 12px;
+box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+transform: translateY(-5px);
+box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+}
+
+.card-img-top {
+height: 200px;
+object-fit: cover;
+border-top-left-radius: 12px;
+border-top-right-radius: 12px;
+}
+
+.recipe-tags {
+margin-bottom: 10px;
+}
+
+.recipe-tags span {
+background-color: #138808;
+padding: 5px 10px;
+border-radius: 5px;
+color: white;
+margin-right: 5px;
+font-size: 0.85rem;
+}
+
+/* =======================
+Recipe Details
+======================= */
+.recipe-photo {
+max-width: 100%;
+border-radius: 12px;
+margin-bottom: 15px;
+}
+
+.difficulty-indicator {
+font-weight: bold;
+padding: 6px 10px;
+border-radius: 8px;
+display: inline-block;
+color: white;
+}
+
+.difficulty-einfach {
+background-color: var(--difficulty-einfach);
+}
+
+.difficulty-mittel {
+background-color: var(--difficulty-mittel);
+color: black;
+}
+
+.difficulty-schwer {
+background-color: var(--difficulty-schwer);
+}
+
+/* =======================
+Forms
+======================= */
+form input, form select, form textarea {
+width: 100%;
+padding: 8px 10px;
+margin-bottom: 15px;
+border-radius: 6px;
+border: 1px solid #ccc;
+font-size: 1rem;
+}
+
+form button,
+button {
+background-color: var(--button-bg);
+color: white;
+border: none;
+padding: 8px 16px;
+border-radius: 6px;
+font-weight: bold;
+cursor: pointer;
+transition: background-color 0.3s;
+}
+
+form button:hover,
+button:hover {
+background-color: var(--button-hover);
+}
+
+/* =======================
+Photo previews
+======================= */
+.photo-preview {
+max-width: 150px;
+max-height: 150px;
+margin: 10px;
+border-radius: 8px;
+object-fit: cover;
+}
+
+/* =======================
+Steps
+======================= */
+.step-number {
+font-weight: bold;
+margin-right: 10px;
+}
+
+textarea {
+resize: vertical;
+}
+
+/* =======================
+Random button
+======================= */
+.random-button {
+margin-top: 15px;
+display: inline-block;
+}
+
+/* =======================
+Dark Mode Overrides
+======================= */
+body[data-theme="dark"],
+html[data-theme="dark"] {
+background-color: var(--bg-color) !important;
+color: var(--text-color) !important;
+}
+
+body[data-theme="dark"] .container,
+body[data-theme="dark"] .card,
+body[data-theme="dark"] header,
+body[data-theme="dark"] footer {
+background-color: var(--card-bg) !important;
+color: var(--card-text) !important;
+}
+
+body[data-theme="dark"] nav a {
+color: var(--nav-link) !important;
+}
+
+body[data-theme="dark"] .card .card-body {
+background-color: var(--card-bg) !important;
+color: var(--card-text) !important;
+}
+
+body[data-theme="dark"] input,
+body[data-theme="dark"] select,
+body[data-theme="dark"] textarea {
+background-color: #2a2a2a;
+color: #f5f5f5;
+border: 1px solid #555;
+}
+
+body[data-theme="dark"] form button {
+background-color: var(--button-bg);
+color: #fff;
+}
+
+body[data-theme="dark"] .recipe-tags span {
+background-color: #4caf50;
+}

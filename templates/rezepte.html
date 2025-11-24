@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Alle Rezepte</h2>
+
+<form method="get" class="mb-3">
+    <div class="row g-2">
+
+        <!-- Sortierung -->
+        <div class="col-md-3">
+            <label class="form-label">Sortierung</label>
+            <select name="sort" class="form-control">
+                <option value="name_asc"  {% if sort == 'name_asc' %}selected{% endif %}>A–Z</option>
+                <option value="name_desc" {% if sort == 'name_desc' %}selected{% endif %}>Z–A</option>
+                <option value="prep_asc"  {% if sort == 'prep_asc' %}selected{% endif %}>Kochzeit ↑</option>
+                <option value="prep_desc" {% if sort == 'prep_desc' %}selected{% endif %}>Kochzeit ↓</option>
+            </select>
+        </div>
+
+        <!-- Tag-Filter -->
+        <div class="col-md-3">
+            <label class="form-label">Tag</label>
+            <select name="tag" class="form-control">
+                <option value="">Alle</option>
+                {% for t in tags %}
+                    <option value="{{ t }}"
+                    {% if selected_tag == t %}selected{% endif %}>
+                        {{ t }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Submit -->
+        <div class="col-md-3 d-flex align-items-end">
+            <button class="btn btn-success w-100">Filtern</button>
+        </div>
+
+    </div>
+</form>
+
+<hr>
+
+<div class="row mt-4">
+
+    {% if recipes|length == 0 %}
+        <p>Keine Rezepte gefunden.</p>
+    {% endif %}
+
+    {% for r in recipes %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+
+            {% if r.photo %}
+            <img src="/uploads/{{ r.photo }}" class="card-img-top" alt="{{ r.name }}">
+            {% endif %}
+
+            <div class="card-body">
+
+                <h5 class="card-title">{{ r.name }}</h5>
+
+                <!-- Tags -->
+                <p class="recipe-tags">
+                    {% for t in r.tags %}
+                        <span class="badge bg-secondary">{{ t }}</span>
+                    {% endfor %}
+                </p>
+
+                <p class="text-muted">
+                    Vorbereitung: {{ r.prep_minutes }} Min<br>
+                    Kochen: {{ r.cook_minutes }} Min
+                </p>
+
+                <a href="/rezept/{{ r.id }}" class="btn btn-primary">Ansehen</a>
+
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

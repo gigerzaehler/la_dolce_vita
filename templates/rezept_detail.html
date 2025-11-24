@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>{{ rezept.name }}</h2>
+
+{% if fotos %}
+    {% for f in fotos %}
+        <img class="recipe-photo" src="/uploads/{{ f.filename }}">
+    {% endfor %}
+{% endif %}
+
+<div class="difficulty-indicator difficulty-{{ rezept.difficulty|lower }}">
+    {{ rezept.difficulty }}
+</div>
+
+<hr>
+
+<h4>Zutaten</h4>
+
+<form method="get">
+    <label>Portionen anpassen:</label>
+    <input type="number" name="p" min="1" value="{{ portionen }}" class="form-control" style="width:120px; display:inline-block;">
+    <button class="btn btn-sm btn-secondary">Aktualisieren</button>
+</form>
+
+<ul class="mt-3">
+    {% for z in zutaten %}
+        <li>
+            {% if z.amount %}
+                {{ (z.amount * multiplier)|round(2) }} {{ z.unit or '' }}
+            {% endif %}
+            {{ z.name }}
+            {% if z.alternative_name %}
+                <br><small>Alternative:
+                    {% if z.alternative_amount %}
+                        {{ (z.alternative_amount * multiplier)|round(2) }} {{ z.alternative_unit or '' }}
+                    {% endif %}
+                    {{ z.alternative_name }}
+                </small>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
+<hr>
+
+<h4>Kochschritte</h4>
+<ol>
+    {% for s in schritte %}
+        <li>{{ s.description }}</li>
+    {% endfor %}
+</ol>
+
+{% endblock %}

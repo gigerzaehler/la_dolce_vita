@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Neues Rezept eintragen</h2>
+
+<form action="/rezept-eintrag" method="post" enctype="multipart/form-data">
+
+    <!-- Name -->
+    <div class="mb-3">
+        <label class="form-label">Name des Rezeptes</label>
+        <input class="form-control" name="name" required>
+    </div>
+
+    <!-- Zutaten -->
+    <h4>Zutaten</h4>
+    <div id="zutaten"></div>
+
+    <button type="button" class="btn btn-sm btn-outline-primary" onclick="addIngredient()">➕ Weitere Zutat</button>
+
+    <script>
+        let ingredientIndex = 0;
+
+        function addIngredient() {
+            const div = document.createElement("div");
+            div.className = "border rounded p-2 mb-3";
+
+            div.innerHTML = `
+                <div class="row mb-2">
+                    <div class="col-3">
+                        <input class="form-control" name="amount_${ingredientIndex}" placeholder="Menge (optional)">
+                    </div>
+                    <div class="col-3">
+                        <input class="form-control" name="unit_${ingredientIndex}" placeholder="Einheit (optional)">
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control" name="name_${ingredientIndex}" placeholder="Zutat" required>
+                    </div>
+                </div>
+
+                <div class="mt-2">
+                    <button type="button" class="btn btn-sm btn-outline-secondary"
+                            onclick="toggleAlternative(this, ${ingredientIndex})">
+                        ➕ Alternative hinzufügen
+                    </button>
+                </div>
+
+                <div class="alternative mt-2" style="display:none;">
+                    <div class="row mb-2">
+                        <div class="col-3">
+                            <input class="form-control" name="alt_amount_${ingredientIndex}" placeholder="Menge (optional)">
+                        </div>
+                        <div class="col-3">
+                            <input class="form-control" name="alt_unit_${ingredientIndex}" placeholder="Einheit (optional)">
+                        </div>
+                        <div class="col-6">
+                            <input class="form-control" name="alt_name_${ingredientIndex}" placeholder="Alternative Zutat">
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById("zutaten").appendChild(div);
+            ingredientIndex++;
+        }
+
+        function toggleAlternative(button, index) {
+            const altDiv = button.parentElement.nextElementSibling;
+            if (altDiv.style.display === "none") {
+                altDiv.style.display = "block";
+                button.textContent = "➖ Alternative entfernen";
+            } else {
+                altDiv.style.display = "none";
+                button.textContent = "➕ Alternative hinzufügen";
+                altDiv.querySelectorAll("input").forEach(i => i.value = "");
+            }
+        }
+
+        window.onload = () => addIngredient();
+    </script>
+
+    <hr>
+
+    <div class="row">
+        <div class="col">
+            <label>Portionen</label>
+            <input class="form-control" name="portionen" type="number" min="1" required>
+        </div>
+
+        <div class="col">
+            <label>Vorbereitungszeit (Minuten)</label>
+            <input class="form-control" name="prep_time" type="number" min="0" required>
+        </div>
+
+        <div class="col">
+            <label>Zubereitungszeit (Minuten)</label>
+            <input class="form-control" name="cook_time" type="number" min="0" required>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <label class="form-label">Kochschritte</label>
+        <textarea class="form-control" name="steps" rows="5" required></textarea>
+    </div>
+
+    <div class="mt-3">
+        <label class="form-label">Aufwendigkeitsgrad</label>
+        <select class="form-control" name="difficulty" required>
+            <option>Einfach</option>
+            <option>Mittel</option>
+            <option>Schwer</option>
+        </select>
+    </div>
+
+    <div class="mt-3">
+        <label class="form-label">Tags (Kommagetrennt)</label>
+        <input class="form-control" name="tags" placeholder="Onepot, Weihnachten, Pasta ...">
+    </div>
+
+    <div class="mt-3">
+        <label class="form-label">Fotos</label>
+        <input class="form-control" type="file" name="photos" multiple>
+    </div>
+
+    <button class="btn btn-primary mt-4" type="submit">💾 Speichern</button>
+</form>
+
+{% endblock %}
